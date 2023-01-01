@@ -14,8 +14,8 @@ export const Map = () => {
         const map = new mapboxgl.Map({
             container: 'map',
             style: 'mapbox://styles/drakosi/ckvcwq3rwdw4314o3i2ho8tph',
-            center:[40.740121,-73.990593],
-            zoom: 3,
+            center:[88.363881, 22.572672],
+            zoom: 4,
         });
     }, [])
   return <div className={style.wrapper}>Map</div>
