@@ -51,7 +51,7 @@ const carList = [
 
 const basePrice = 1542;
 
-export const RideSelector = () => {
+export const RideSelector = () => { 
   return (
     <div className={style.wrapper}>
         <div className={style.title}>Choose a ride or swipe up for more.</div>

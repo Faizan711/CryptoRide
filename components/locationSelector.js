@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-
+import { useContext } from 'react'
+import { UberContext } from '../context/uberContext'
 const style = {
     wrapper:`pt-2`,
     searchHeader:`w-full font-bold text-left flex items-center text-3xl p-4 overflow-hidden`,
