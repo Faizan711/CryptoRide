@@ -21,8 +21,8 @@ export default function Home() {
       <div className={style.main} id="map">
       <Map/>
       </div>
-      <div className={style.rideRequestContainer}>
-        <div className={style.rideRequest}>
+      <div className={style.rideRequestContainer} >
+        <div className={style.rideRequest} style={{marginTop:"35px", height:"600px"}}>
           <LocationSelector/>
           <Confirm/>
         </div>

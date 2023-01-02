@@ -8,7 +8,7 @@ import uberBlack from '../assets/rides/uberBlack.png'
 import ethLogo from '../assets/eth-logo.png'
 
 const style = {
-    wrapper: `h-full flex flex-col`,
+    wrapper: `h-full flex flex-col bg-white text-black`,
     title: `text-gray-500 text-center text-xs py-2 border-b`,
     carList: `flex flex-col flex-1 y-overflow-scroll`,
     car: `flex p-3 m-2 items-center border-2 border-white`,
@@ -23,33 +23,33 @@ const style = {
 
 const carList = [
     {
-        name:"uberX",
+        name:"CryptoX",
         iconUrl: uberX,
         priceMultiplier:1,
     },
     {
-        name:"uberXL",
+        name:"CryptoXL",
         iconUrl: uberXL,
         priceMultiplier:2,
     },
     {
-        name:"uberSelect",
+        name:"CryptoSelect",
         iconUrl: uberSelect,
         priceMultiplier:1.5,
     },
     {
-        name:"uberBlackSuv",
+        name:"CryptoBlackSuv",
         iconUrl: uberBlackSuv,
         priceMultiplier:3,
     },
     {
-        name:"uberBlack",
+        name:"CryptoBlack",
         iconUrl: uberBlack,
         priceMultiplier:2,
     },
 ]
 
-const basePrice = 1542;
+const basePrice = 0;
 
 export const RideSelector = () => { 
   return (
@@ -57,7 +57,7 @@ export const RideSelector = () => {
         <div className={style.title}>Choose a ride or swipe up for more.</div>
         <div className={style.carList}>
             {carList.map((car, index) => (
-                <div className={style.car}>
+                <div key={index} className={style.car}>
                     <Image
                     src={car.iconUrl}
                     height={50}

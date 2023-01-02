@@ -46,7 +46,7 @@ export const UberProvider = ({children}) => {
 
       useEffect(() => {
         if (pickup && dropoff) {
-          ;(async () => {
+          (async () => {
             await Promise.all([
               createLocationCoordinatePromise(pickup, 'pickup'),
               createLocationCoordinatePromise(dropoff, 'dropoff'),
@@ -55,34 +55,16 @@ export const UberProvider = ({children}) => {
         } else return
       }, [pickup, dropoff])
     
-      const requestToCreateUserOnSanity = async address => {
-        if (!window.ethereum) return
-        try {
-          await fetch('/api/db/createUser', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              userWalletAddress: address,
-              name: faker.name.findName(),
-            }),
-          })
-        } catch (error) {
-          console.error(error)
-        }
-      }
-    
       return (
         <UberContext.Provider
-          value={{pickup,
+          value={{ pickup,
             setPickup,
             dropoff,
             setDropoff,
             pickupCoordinates,
             setPickupCoordinates,
             dropoffCoordinates,
-            setDropoffCoordinates}}>
+            setDropoffCoordinates,}}>
             {children}
           </UberContext.Provider>
       )
