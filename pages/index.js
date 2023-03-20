@@ -1,10 +1,10 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import { Navbar } from '../components/navbar'
-import { Map } from '../components/map'
-import { LocationSelector } from '../components/locationSelector'
-import { Confirm } from '../components/confirm'
+import Navbar from '../components/navbar'
+import  Map  from '../components/map'
+import  LocationSelector  from '../components/locationSelector'
+import  Confirm  from '../components/confirm'
 
 const style = {
   wrapper: `h-screen w-screen flex flex-col`,
