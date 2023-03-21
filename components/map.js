@@ -14,7 +14,7 @@ mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN
 export const Map = () => 
 {
     const { pickupCoordinates, dropoffCoordinates} = useContext(UberContext)
-    console.log(pickupCoordinates, dropoffCoordinates)
+    //console.log(pickupCoordinates, dropoffCoordinates)
     useEffect(() => { 
         const map = new mapboxgl.Map({
             container: 'map',
@@ -47,3 +47,5 @@ export const Map = () =>
 
   return <div className={style.wrapper}>Map</div>
 }
+
+export default Map

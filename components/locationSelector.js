@@ -15,7 +15,7 @@ export const LocationSelector = () => {
     const [inFocus, setInFocus] = useState('from')
     const { pickup, setPickup, dropoff, setDropoff } = useContext(UberContext)
 
-    console.log({ pickup:pickup , dropoff:dropoff})
+    //console.log({ pickup:pickup , dropoff:dropoff})
   return (
     <div className={style.wrapper} >
         <div className={style.searchHeader}>
@@ -68,3 +68,4 @@ export const LocationSelector = () => {
     </div>
   )
 }
+export default LocationSelector
