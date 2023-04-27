@@ -1,7 +1,7 @@
-import Image from "next/image";
-import ethLogo from "../assets/eth-logo.png";
-import { useEffect, useContext, useState } from "react";
-import { UberContext } from "../context/uberContext";
+import Image from "next/image"
+import ethLogo from "../assets/eth-logo.png"
+import { useEffect, useContext, useState } from "react"
+import { UberContext } from "../context/uberContext"
 
 const style = {
   wrapper: `h-full flex flex-col`,
@@ -20,23 +20,23 @@ const style = {
 const RideSelector = () => {
   const [carList, setCarList] = useState([]);
   const { selectedRide, setSelectedRide, setPrice, basePrice } =
-    useContext(UberContext);
+    useContext(UberContext)
 
   //console.log(basePrice);
 
   useEffect(() => {
     (async () => {
       try {
-        const response = await fetch("/api/db/getRideTypes");
+        const response = await fetch("/api/db/getRideTypes")
 
-        const data = await response.json();
-        setCarList(data.data);
-        setSelectedRide(data.data[0]);
+        const data = await response.json()
+        setCarList(data.data)
+        setSelectedRide(data.data[0])
       } catch (error) {
-        console.error(error);
+        console.error(error)
       }
     })();
-  }, []);
+  }, [setSelectedRide])
 
   return (
     <div className={style.wrapper}>
@@ -59,6 +59,7 @@ const RideSelector = () => {
           >
             <Image
               src={car.iconUrl}
+              alt = 'Icon of a Car'
               className={style.carImage}
               height={50}
               width={50}
@@ -71,7 +72,7 @@ const RideSelector = () => {
               <div className={style.price}>
                 {((basePrice / 10 ** 5) * car.priceMultiplier).toFixed(5)}
               </div>
-              <Image src={ethLogo} height={25} width={40} />
+              <Image alt = 'Ethereum Logo'src={ethLogo} height={25} width={40} />
             </div>
           </div>
         ))}
@@ -80,4 +81,4 @@ const RideSelector = () => {
   );
 };
 
-export default RideSelector;
+export default RideSelector
