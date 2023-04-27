@@ -33,6 +33,7 @@ const Navbar = () => {
         <div className={style.userImageContainer}>
           <Image
             className={style.userImage}
+            alt = 'An Avatar'
             src={avatar}
             width={40}
             height={40}

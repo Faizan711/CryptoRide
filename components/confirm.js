@@ -16,6 +16,7 @@ const Confirm = () => {
     pickup,
     dropoff,
     price,
+    setPrice,
     selectedRide,
     pickupCoordinates,
     dropoffCoordinates,
@@ -37,15 +38,21 @@ const Confirm = () => {
           selectedRide: selectedRide,
         }),
       })
-
+      console.log(price)
+      if (typeof price === 'undefined') {
+        console.error('Setting default price value.')
+        setPrice(0.002)
+        console.log('New Price = ',price);
+      }
+      let eth_price = BigInt(price*Math.pow(10,18)).toString(16);
+      console.log("Eth price = ",eth_price);
       await metamask.request({
         method: 'eth_sendTransaction',
         params: [
           {
             from: currentAccount,
             to: process.env.NEXT_PUBLIC_UBER_ADDRESS,
-            gas: '0x7EF40', // 520000 Gwei
-            value: ethers.utils.parseEther(price)._hex,
+            value: eth_price,
           },
         ],
       })
