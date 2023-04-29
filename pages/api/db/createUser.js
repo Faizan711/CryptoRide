@@ -6,9 +6,10 @@ const createUserInSanity = async (req, res) => {
       _type: 'users',
       _id: req.body.userWalletAddress,
       name: req.body.name,
+      phone:req.body.phone,
       walletAddress: req.body.userWalletAddress,
     }
-
+    
     await client.createIfNotExists(userDoc)
 
     res.status(200).send({ message: 'success' })

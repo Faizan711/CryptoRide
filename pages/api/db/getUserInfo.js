@@ -4,7 +4,7 @@ const getUserInfo = async (req, res) => {
   try {
     const query = `
       *[_type == "users" && walletAddress=="${req.query.walletAddress}"]{
-          name,
+          name,phone,
           walletAddress,
           "imageUrl": profileImage.asset->url
         }
