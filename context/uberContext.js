@@ -77,7 +77,7 @@ export const UberProvider = ({ children }) => {
 
       if (addressArray.length > 0) {
         setCurrentAccount(addressArray[0]);
-        requestToCreateUserOnSanity(addressArray[0]);
+        //requestToCreateUserOnSanity(addressArray[0]);
       }
     } catch (error) {
       console.error(error);
@@ -155,6 +155,7 @@ export const UberProvider = ({ children }) => {
       );
 
       const data = await response.json();
+      alert("User Phone is = "+data.data.phone);
       setCurrentUser(data.data);
     } catch (error) {
       console.error(error);
@@ -177,6 +178,9 @@ export const UberProvider = ({ children }) => {
         currentUser,
         selectedRide,
         setSelectedRide,
+        connectWallet,
+        requestToCreateUserOnSanity,
+        requestToGetCurrentUsersInfo,
         price,
         setPrice,
         basePrice,
