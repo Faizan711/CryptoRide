@@ -155,7 +155,7 @@ export const UberProvider = ({ children }) => {
       );
 
       const data = await response.json();
-      alert("User Phone is = "+data.data.phone);
+      //alert("User Phone is = "+data.data.phone);
       setCurrentUser(data.data);
     } catch (error) {
       console.error(error);

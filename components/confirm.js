@@ -25,6 +25,7 @@ const Confirm = () => {
 
   const storeTripDetails = async (pickup, dropoff) => {
     try {
+      console.log(selectedRide);
       await fetch('/api/db/saveTrips', {
         method: 'POST',
         headers: {

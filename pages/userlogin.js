@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { UberContext } from "../context/uberContext";
 import { useRouter } from "next/router";
-function Login() {
+function userLogin() {
   const router = useRouter();
   const {
     requestToGetCurrentUsersInfo,
@@ -119,4 +119,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default userLogin;

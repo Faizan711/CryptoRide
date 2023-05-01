@@ -35,7 +35,7 @@ export const driverSchema = {
       },
       {
         name:'car_number',
-        type:'number',
+        type:'string',
         title:'Car Number'
       },
       {
