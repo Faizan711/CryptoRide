@@ -10,13 +10,13 @@ function userLogin() {
     wrapper:`h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-100 to-indigo-800 font-readex`,
     card:`bg-black text-white md:w-2/6 shadow-lg p-10 rounded-2xl font-medium`,
     signup: `mb-10`,
-    login: ``,
+    login: `flex justify-center`,
     input:`no-underline w-full text-black text-base my-3 p-1.5 border-solid border-2 rounded-md focus:outline-none appearance-none`,
     h3:`text-center text-2xl pb-2 border-b`,
     text:`text-lg text-center my-1`,
     address:`w-full text-lg mb-3`,
     metabtn:`my-2 text-lg display:block md:w-64 bg-gradient-to-tr from-pink-500 to-yellow-500 hover:from-yellow-500 hover:to-pink-500 flex flex-row items-center justify-center w-full h-10 mx-auto rounded-full font-normal`,
-    btn:` text-center text-lg w-full h-10 mx-auto rounded-2xl font-normal border-2 border-blue-400 bg-indigo-400 hover:bg-white hover:text-black`,
+    btn:`  text-lg md:w-64 w-full h-10 rounded-2xl font-normal border-2 border-blue-400 bg-indigo-400 hover:bg-white hover:text-black`,
   }
 
   const {
@@ -114,7 +114,7 @@ function userLogin() {
               value={currentAccount ? currentAccount : "Not Connected"}
             />
             <div>
-              <div>
+              <div className={style.login}>
                 <button type="submit" className={style.btn}>
                   Submit
                 </button>
