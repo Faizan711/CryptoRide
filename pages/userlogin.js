@@ -1,8 +1,24 @@
 import React, { useContext, useState } from "react";
 import { UberContext } from "../context/uberContext";
 import { useRouter } from "next/router";
+import { FaEthereum } from 'react-icons/fa';
+
 function Login() {
   const router = useRouter();
+
+  const style = {
+    wrapper:`h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-100 to-indigo-800 font-readex`,
+    card:`bg-black text-white md:w-2/6 shadow-lg p-10 rounded-2xl font-medium`,
+    signup: `mb-10`,
+    login: ``,
+    input:`no-underline w-full text-black text-base my-3 p-1.5 border-solid border-2 rounded-md focus:outline-none appearance-none`,
+    h3:`text-center text-2xl pb-2 border-b`,
+    text:`text-lg text-center my-1`,
+    address:`w-full text-lg mb-3`,
+    metabtn:`my-2 text-lg display:block md:w-64 bg-gradient-to-tr from-pink-500 to-yellow-500 hover:from-yellow-500 hover:to-pink-500 flex flex-row items-center justify-center w-full h-10 mx-auto rounded-full font-normal`,
+    btn:` text-center text-lg w-full h-10 mx-auto rounded-2xl font-normal border-2 border-blue-400 bg-indigo-400 hover:bg-white hover:text-black`,
+  }
+
   const {
     requestToGetCurrentUsersInfo,
     connectWallet,
@@ -55,40 +71,42 @@ function Login() {
     router.push("/");
   };
   return (
-    <div>
+    <div className={style.wrapper}>
+      <div className={style.card}>
       <div
-        className="Signup"
-        style={{ border: "1px solid black", display: "inline-block" }}
+        className={style.signup}
       >
-        <h3>
-          <b>Sign Up</b>
+        <h3 className={style.h3}>
+          User Sign Up
         </h3>
         <div className="form">
           <form onSubmit={handleSubmit}>
             <div>
-              <label>Name:</label>
-            </div>
             <input
+              placeholder="Enter your name"
+              className={style.input}
               type="text"
               required
               autoComplete="off"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
-            <div>
-              <label>Phone:</label>
             </div>
             <input
+              placeholder="Enter you number"
+              className={style.input}
               type="number"
               required
               autoComplete="off"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
             />
-            <div>
-              <label>Wallet Address:</label>
+            <button onClick={handleConnectClick} className={style.metabtn}>Connect to Wallet <FaEthereum/></button>
+            <div className={style.text}>
+              <label >Wallet Address:</label>
             </div>
             <input
+              className={style.address}
               type="text"
               required
               disabled
@@ -96,9 +114,8 @@ function Login() {
               value={currentAccount ? currentAccount : "Not Connected"}
             />
             <div>
-              <button onClick={handleConnectClick}>Connect to Wallet</button>
               <div>
-                <button type="submit">
+                <button type="submit" className={style.btn}>
                   Submit
                 </button>
               </div>
@@ -106,14 +123,13 @@ function Login() {
           </form>
         </div>
       </div>
+      <hr></hr>
+      <h3 className={style.text}>Already a user? login below:</h3>
       <div
-        className="Login"
-        style={{ border: "1px solid black", display: "inline-block" }}
+        className={style.login}
       >
-        <h3>
-          <b>Login</b>
-        </h3>
-        <button onClick={handleLogin}>Click to Login with metamask</button>
+        <button onClick={handleLogin} className={style.btn}>Login with metamask</button>
+      </div>
       </div>
     </div>
   );
