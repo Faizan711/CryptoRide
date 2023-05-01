@@ -1,7 +1,9 @@
 import React, { useContext, useState } from "react";
 import { UberContext } from "../context/uberContext";
 import { useRouter } from "next/router";
-function Login() {
+import { FaEthereum } from 'react-icons/fa';
+
+function userLogin() {
   const router = useRouter();
 
   const style = {
