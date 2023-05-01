@@ -9,6 +9,11 @@ export const userSchema = {
         title: 'Name',
       },
       {
+        name: 'phone',
+        type: 'number',
+        title: 'Phone'
+      },
+      {
         name: 'walletAddress',
         type: 'string',
         title: 'Wallet Address',

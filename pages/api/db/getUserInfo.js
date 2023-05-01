@@ -1,21 +1,21 @@
-import { client } from '../../../lib/sanity'
+import { client } from "../../../lib/sanity";
 
 const getUserInfo = async (req, res) => {
   try {
     const query = `
       *[_type == "users" && walletAddress=="${req.query.walletAddress}"]{
-          name,
+          name,phone,
           walletAddress,
           "imageUrl": profileImage.asset->url
         }
-    `
+    `;
 
-    const sanityResponse = await client.fetch(query)
+    const sanityResponse = await client.fetch(query);
 
-    res.status(200).send({ message: 'success', data: sanityResponse[0] })
+    res.status(200).send({ message: "success", data: sanityResponse[0] });
   } catch (error) {
-    res.status(500).send({ message: 'error', data: error.message })
+    res.status(500).send({ message: "error", data: error.message });
   }
-}
+};
 
-export default getUserInfo
+export default getUserInfo;

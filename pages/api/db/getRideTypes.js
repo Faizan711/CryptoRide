@@ -4,6 +4,7 @@ const query = `
 *[_type=="rides"]{
   "service": title,
   "iconUrl": icon.asset->url,
+  _id,
   priceMultiplier,
   orderById
 }|order(orderById asc)
