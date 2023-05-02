@@ -7,7 +7,7 @@ function userLogin() {
   const router = useRouter();
 
   const style = {
-    wrapper:`h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-100 to-indigo-800 font-readex`,
+    wrapper:`h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-400 to-indigo-800 font-readex`,
     card:`bg-black text-white md:w-2/6 shadow-lg p-10 rounded-2xl font-medium`,
     signup: `mb-10`,
     login: `flex justify-center`,
@@ -15,7 +15,7 @@ function userLogin() {
     h3:`text-center text-2xl pb-2 border-b`,
     text:`text-lg text-center my-1`,
     address:`w-full text-lg mb-3`,
-    metabtn:`my-2 text-lg display:block md:w-64 bg-gradient-to-tr from-pink-500 to-yellow-500 hover:from-yellow-500 hover:to-pink-500 flex flex-row items-center justify-center w-full h-10 mx-auto rounded-full font-normal`,
+    metabtn:`my-2 text-lg display:block lg:w-64 bg-gradient-to-tr from-pink-500 to-yellow-500 hover:from-yellow-500 hover:to-pink-500 flex flex-row items-center justify-center w-full h-10 mx-auto rounded-full font-normal`,
     btn:`  text-lg md:w-64 w-full h-10 rounded-2xl font-normal border-2 border-blue-400 bg-indigo-400 hover:bg-white hover:text-black`,
   }
 
@@ -67,7 +67,7 @@ function userLogin() {
   const handleLogin = async (event) => {
     event.preventDefault();
     await connectWallet();
-    requestToGetCurrentUsersInfo(currentAccount);
+    await requestToGetCurrentUsersInfo(currentAccount);
     router.push("/");
   };
   return (

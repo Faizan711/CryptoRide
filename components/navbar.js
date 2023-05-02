@@ -5,7 +5,7 @@ import { useContext } from 'react'
 import { UberContext } from '../context/uberContext'
 
 const style = {
-  wrapper: `h-16 w-full bg-black text-white flex md:justify-around items-center px-60 fixed z-20`,
+  wrapper: `h-16 w-full bg-gradient-to-br from-blue-400 to-indigo-800 text-white flex md:justify-around items-center px-60 fixed z-20`,
   leftMenu: `flex gap-3`,
   logo: `text-3xl text-white flex cursor-pointer mr-16`,
   menuItem: `text-lg text-white font-medium flex items-center mx-4 cursor-pointer`,
@@ -22,7 +22,7 @@ const Navbar = () => {
   return (
     <div className={style.wrapper}>
       <div className={style.leftMenu}>
-        <div className={style.logo}>Uber</div>
+        <div className={style.logo}>CryptoRide</div>
         <div className={style.menuItem}>Ride</div>
         <div className={style.menuItem}>Drive</div>
         <div className={style.menuItem}>More</div>

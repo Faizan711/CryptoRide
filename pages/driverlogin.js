@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UberContext } from "../context/uberContext";
 import { useRouter } from "next/router";
+import { FaEthereum } from 'react-icons/fa';
 
 function driverLogin() {
   const router = useRouter();
@@ -21,19 +22,28 @@ function driverLogin() {
   const [activeTab, setActiveTab] = useState('login');
 
   const handleTabClick = (tab) => {
+    setDriver({
+      name: "",
+      phone: "",
+      walletAddress: "",
+      address: "",
+      aadhar: "",
+      car_number: "",
+      car_model: "",
+    });
     setActiveTab(tab);
     console.log(activeTab);
   };
 
   const style = {
-    wrapper:`h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-100 to-indigo-800 font-readex`,
+    wrapper:`h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-400 to-indigo-800 font-readex`,
     card:`bg-black flex flex-col text-white md:w-2/6 shadow-lg p-10 rounded-2xl font-medium`,
     tab:`flex flex-row w-full justify-between border-b mb-2`,
     login:`text-center text-xl w-1/2 border-r hover:bg-gray-600`,
     signup:`text-center text-xl w-1/2 hover:bg-gray-600`,
     btndiv:`flex justify-center`,
     input:`no-underline w-full text-black text-base my-3 p-1 border-solid border-2 rounded-md focus:outline-none appearance-none`,
-    metabtn:`my-2 text-lg display:block md:w-64 bg-gradient-to-tr from-pink-500 to-yellow-500 hover:from-yellow-500 hover:to-pink-500 flex flex-row items-center justify-center w-full h-10 mx-auto rounded-full font-normal`,
+    metabtn:`my-2 text-lg display:block lg:w-64 bg-gradient-to-tr from-pink-500 to-yellow-500 hover:from-yellow-500 hover:to-pink-500 flex flex-row items-center justify-center w-full h-10 mx-auto rounded-full font-normal`,
     btn:`  text-lg md:w-64 w-full h-10 rounded-2xl font-normal border-2 border-blue-400 bg-indigo-400 hover:bg-white hover:text-black`,
     select:`w-full text-black focus:outline-none no-underline appearance-none`,
   }
@@ -234,7 +244,9 @@ function driverLogin() {
                     </option>
                   ))}
                 </select>
-                <button onClick={handleConnectClick} className={style.metabtn}>Connect to Wallet</button>
+                <button onClick={handleConnectClick} className={style.metabtn}>
+                  Connect to Wallet <FaEthereum/>
+                </button>
                 <div>
                   <label>Wallet Address:</label>
                 </div>
@@ -281,7 +293,7 @@ function driverLogin() {
               }
             />
             <div>
-              <button onClick={handleConnectClick} className={style.metabtn}>Connect to Wallet</button>
+              <button onClick={handleConnectClick} className={style.metabtn}>Connect to Wallet <FaEthereum/></button>
             </div>
             <div>
               <label>Wallet Address:</label>
