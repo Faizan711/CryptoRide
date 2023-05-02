@@ -6,8 +6,8 @@ import { ethers } from 'ethers'
 const style = {
   wrapper: `flex-1 h-full flex flex-col justify-between`,
   rideSelectorContainer: `h-full flex flex-col overflow-scroll`,
-  confirmButtonContainer: ` border-t-2 cursor-pointer z-10`,
-  confirmButton: `bg-gradient-to-br from-blue-400 to-indigo-800 text-white m-4 py-4 text-center text-xl`,
+  confirmButtonContainer: ` border-t-2 cursor-pointer z-10 `,
+  confirmButton: `bg-gradient-to-br from-blue-400 to-indigo-800 text-white m-4 py-4 transition-colors duration-500 text-center text-xl font-semibold rounded-xl  hover:from-blue-300 hover:to-indigo-900 hover:text-black`,
 }
 
 const Confirm = () => {
