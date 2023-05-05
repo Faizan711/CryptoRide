@@ -4,7 +4,7 @@ import { useEffect, useContext, useState } from "react"
 import { UberContext } from "../context/uberContext"
 
 const style = {
-  wrapper: `h-full flex flex-col`,
+  wrapper: `h-full flex flex-col scrollbar-none`,
   title: `text-gray-500 text-center text-xs py-2 border-b`,
   carList: `flex flex-col flex-1 overflow-scroll`,
   car: `flex p-3 m-2 items-center border-2 border-white`,
