@@ -141,21 +141,27 @@ export const UberProvider = ({ children }) => {
   }, [pickup, dropoff]);
 
   useEffect(() => {
-    const storedDriver = window.sessionStorage.getItem("driver");
-    if (storedDriver) {
-      setDriver(JSON.parse(window.sessionStorage.getItem("driver")));
-    } else {
-      setDriver({
-        name: "",
-        phone: "",
-        walletAddress: "",
-        address: "",
-        aadhar: "",
-        car_number: "",
-        car_model: "",
-      });
+    try {
+      const storedDriver = window.localStorage.getItem("driver");
+      if (storedDriver) {
+        setDriver(JSON.parse(storedDriver));
+      } else {
+        setDriver({
+          name: "",
+          phone: "",
+          walletAddress: "",
+          address: "",
+          aadhar: "",
+          car_number: "",
+          car_model: "",
+        });
+      }
+    } catch (error) {
+      // Handle error
+      console.error(error);
     }
   }, []);
+  
 
   const requestToCreateUserOnSanity = async (address) => {
     if (!window.ethereum) return;

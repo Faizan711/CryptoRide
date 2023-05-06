@@ -19,7 +19,7 @@ export default function Home() {
     const fetchDriverRides = async () => {
       try {
         const response = await fetch(
-          `/api/db/getDriverRides?car_model=${driver.car_model}`
+          `/api/db/getDriverRides?car_model=${driver?.car_model}`
         );
         const data = await response.json();
         setRides(data.data);
@@ -29,7 +29,7 @@ export default function Home() {
     };
 
     fetchDriverRides();
-  }, []);
+  }, [rides]);
 
   return (
     <div className={style.wrapper}>

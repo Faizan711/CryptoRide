@@ -115,7 +115,7 @@ function driverLogin() {
         car_model: data.data.car_model._ref,
       };
       setDriver(tempdriverdata);
-      window.sessionStorage.setItem('driver',JSON.stringify(tempdriverdata))
+      window.localStorage.setItem('driver',JSON.stringify(tempdriverdata))
       if(data.message == 'success')
       {
         router.push('/driver')
