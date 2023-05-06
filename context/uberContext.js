@@ -156,6 +156,23 @@ export const UberProvider = ({ children }) => {
     } else return;
   }, [pickup, dropoff]);
 
+  useEffect(() => {
+    const storedDriver = window.sessionStorage.getItem("driver");
+    if (storedDriver) {
+      setDriver(JSON.parse(window.sessionStorage.getItem("driver")));
+    } else {
+      setDriver({
+        name: "",
+        phone: "",
+        walletAddress: "",
+        address: "",
+        aadhar: "",
+        car_number: "",
+        car_model: "",
+      });
+    }
+  }, []);
+
   const requestToCreateUserOnSanity = async (address) => {
     if (!window.ethereum) return;
     try {
@@ -187,7 +204,7 @@ export const UberProvider = ({ children }) => {
       console.error(error);
     }
   };
-  
+
   return (
     <UberContext.Provider
       value={{
