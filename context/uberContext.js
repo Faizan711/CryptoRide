@@ -6,7 +6,7 @@ export const UberContext = createContext();
 export const UberProvider = ({ children }) => {
   const [pickup, setPickup] = useState("");
   const [dropoff, setDropoff] = useState("");
-  const [driverlocation, setDriverLocation] = useState("");
+  const [driverCoordinates, setDriverCoordinates] = useState({latitude:null,longitude:null});
   const [pickupCoordinates, setPickupCoordinates] = useState();
   const [dropoffCoordinates, setDropoffCoordinates] = useState();
   const [currentAccount, setCurrentAccount] = useState();
@@ -33,22 +33,6 @@ export const UberProvider = ({ children }) => {
   useEffect(() => {
     checkIfWalletIsConnected();
   }, []);
-
-  // useEffect(() => {
-  //   if (driver?.walletAddress && driver?.phone) {
-  //     if (navigator.geolocation) {
-  //       var watchId = navigator.geolocation.watchPosition(showPosition);
-  //     } else {
-  //       alert("Geolocation is not supported by this browser.");
-  //     }
-  //   }
-  // }, []);
-
-  // const showPosition = (position) => {
-  //   var latitude = position.coords.latitude;
-  //   var longitude = position.coords.longitude;
-  //   console.log("Latitude: " + latitude + " Longitude: " + longitude);
-  // };
 
   useEffect(() => {
     if (!currentAccount) return;
@@ -210,6 +194,8 @@ export const UberProvider = ({ children }) => {
       value={{
         driver,
         setDriver,
+        driverCoordinates,
+        setDriverCoordinates,
         pickup,
         setPickup,
         dropoff,
@@ -218,6 +204,7 @@ export const UberProvider = ({ children }) => {
         setPickupCoordinates,
         dropoffCoordinates,
         setDropoffCoordinates,
+        createLocationCoordinatePromise,
         connectWallet,
         currentAccount,
         currentUser,

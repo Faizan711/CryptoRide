@@ -1,22 +1,9 @@
 import Navbar from "../components/driverNavbar";
-import Map from "../components/map";
+import Map from "../components/driverMap";
 import AvailableRides from "../components/rideDisplay";
-const rides = [
-    {
-      pickup: "Kolkata",
-      dropoff: "Howrah",
-      price: 0.2,
-      passenger:"Passenger 1",
-      passenger_phone:9221212132
-    },
-    {
-        pickup: "Airpot",
-        dropoff: "Aliah University",
-        price: 0.5,
-        passenger:"Passenger 2",
-        passenger_phone:567168045
-      }
-  ];
+import { useContext, useEffect, useState } from "react";
+import { UberContext } from "../context/uberContext";
+
 const style = {
   wrapper: `h-screen w-screen flex flex-col`,
   main: `h-screen w-screen flex-1 z-10 absolute`,
@@ -26,15 +13,39 @@ const style = {
 };
 
 export default function Home() {
+  const [rides, setRides] = useState([]);
+  const { driver } = useContext(UberContext);
+  useEffect(() => {
+    const fetchDriverRides = async () => {
+      try {
+        const response = await fetch(
+          `/api/db/getDriverRides?car_model=${driver.car_model}`
+        );
+        const data = await response.json();
+        setRides(data.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchDriverRides();
+  }, []);
+
   return (
     <div className={style.wrapper}>
       <Navbar />
       <div className={style.main} id="map">
         <Map />
       </div>
-      <div className="fixed bottom-0 right-0 p-4 z-20">
-        <AvailableRides initialRides={rides}/>
-      </div>
+      <div>
+      {rides.length > 0 ? (
+        <div className="fixed bottom-0 right-0 p-4 z-30">
+          <AvailableRides initialRides={rides} />
+        </div>
+      ) : (
+        <div>Loading...</div>
+      )}
+    </div>
     </div>
   );
 }

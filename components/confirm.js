@@ -35,6 +35,7 @@ const Confirm = () => {
           pickupLocation: pickup,
           dropoffLocation: dropoff,
           userWalletAddress: currentAccount,
+          status:'booked',
           price: price,
           selectedRide: selectedRide,
         }),
