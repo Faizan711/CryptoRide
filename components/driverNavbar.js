@@ -21,19 +21,18 @@ const style = {
 const Navbar = () => {
   const router = useRouter();
 
-  const { currentAccount, currentUser } = useContext(UberContext)
+  const { driver } = useContext(UberContext)
 
   return (
     <div className={style.wrapper}>
       <div className={style.leftMenu}>
         <div className={style.logo}>CryptoRide</div>
         <div className={style.item}>Ride</div>
-        <div className={style.item}>Drive</div>
         <div className={style.item}>More</div>
       </div>
       <div className={style.rightMenu}>
         <div className={style.item}>Help</div>
-        <div className={style.menuItem}>{currentUser.name?.split(' ')[0]}</div>
+        <div className={style.menuItem}>{driver.name?.split(' ')[0]}</div>
         <div className={style.userImageContainer}>
           <Image
             className={style.userImage}
@@ -43,14 +42,14 @@ const Navbar = () => {
             height={40}
           />
         </div>
-        {currentAccount ? (
+        {driver.walletAddress ? (
           <div>
-            {currentAccount.slice(0, 6)}...{currentAccount.slice(39)}
+            {driver.walletAddress.slice(0, 6)}...{driver.walletAddress.slice(39)}
           </div>
         ) : (
-          <div className={style.loginButton} onClick={() => router.push('/userlogin')}>
+          <div className={style.loginButton} onClick={() => router.push('/driverlogin')}>
             <BsPerson />
-            <span className={style.loginText}>Log in</span>
+            <span className={style.loginText}>Driver Log in</span>
           </div>
         )}
       </div>

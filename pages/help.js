@@ -105,7 +105,7 @@ function Help() {
             </details>
           </div>
         ))}
-      </div>qiuich doronw 
+      </div>
     </div>
   );
 }

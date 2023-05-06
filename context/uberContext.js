@@ -6,6 +6,7 @@ export const UberContext = createContext();
 export const UberProvider = ({ children }) => {
   const [pickup, setPickup] = useState("");
   const [dropoff, setDropoff] = useState("");
+  const [driverlocation, setDriverLocation] = useState("");
   const [pickupCoordinates, setPickupCoordinates] = useState();
   const [dropoffCoordinates, setDropoffCoordinates] = useState();
   const [currentAccount, setCurrentAccount] = useState();
@@ -13,6 +14,15 @@ export const UberProvider = ({ children }) => {
   const [selectedRide, setSelectedRide] = useState([]);
   const [price, setPrice] = useState();
   const [basePrice, setBasePrice] = useState();
+  const [driver, setDriver] = useState({
+    name: "",
+    phone: "",
+    walletAddress: "",
+    address: "",
+    aadhar: "",
+    car_number: "",
+    car_model: "",
+  });
 
   let metamask;
 
@@ -23,6 +33,22 @@ export const UberProvider = ({ children }) => {
   useEffect(() => {
     checkIfWalletIsConnected();
   }, []);
+
+  // useEffect(() => {
+  //   if (driver?.walletAddress && driver?.phone) {
+  //     if (navigator.geolocation) {
+  //       var watchId = navigator.geolocation.watchPosition(showPosition);
+  //     } else {
+  //       alert("Geolocation is not supported by this browser.");
+  //     }
+  //   }
+  // }, []);
+
+  // const showPosition = (position) => {
+  //   var latitude = position.coords.latitude;
+  //   var longitude = position.coords.longitude;
+  //   console.log("Latitude: " + latitude + " Longitude: " + longitude);
+  // };
 
   useEffect(() => {
     if (!currentAccount) return;
@@ -161,10 +187,12 @@ export const UberProvider = ({ children }) => {
       console.error(error);
     }
   };
-
+  
   return (
     <UberContext.Provider
       value={{
+        driver,
+        setDriver,
         pickup,
         setPickup,
         dropoff,
