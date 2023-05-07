@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 
 function Help() {
+
+  const style = {
+    wrapper:`bg-gradient-to-br from-blue-400 to-indigo-800`,
+  }
+
   const [accordion, setAccordion] = useState([
     {
       question: ' How do I request a ride?',
@@ -74,10 +79,11 @@ function Help() {
   };
 
   return (
-    <div className="max-w-screen-xl mx-auto px-5 bg-white min-h-screen">
+    <div className={style.wrapper}>
+    <div className="max-w-screen-xl mx-auto px-5 bg-gradient-to-br from-blue-400 to-indigo-800 min-h-screen">
       <div className="flex flex-col items-center">
         <h2 className="font-bold text-5xl mt-5 tracking-tight">FAQ</h2>
-        <p className="text-neutral-500 text-xl mt-3">Frequently asked questions</p>
+        <p className=" text-2xl mt-3 text-center">Frequently asked questions</p>
       </div>
       <div className="grid divide-y divide-neutral-200 max-w-xl mx-auto mt-8">
         {accordion.map((item, index) => (
@@ -101,11 +107,12 @@ function Help() {
                   </svg>
                 </span>
               </summary>
-              <p className="text-neutral-600 mt-3 group-open:animate-fadeIn">{item.answer}</p>
+              <p className=" mt-3 group-open:animate-fadeIn">{item.answer}</p>
             </details>
           </div>
         ))}
       </div>
+    </div>
     </div>
   );
 }
