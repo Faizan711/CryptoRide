@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 
 const style = {
   wrapper: `h-16 w-full bg-gradient-to-br from-blue-400 to-indigo-800 text-white flex md:justify-around items-center px-60 fixed z-20`,
-  leftMenu: `flex gap-3`,
+  leftMenu: `flex `,
   logo: `text-3xl text-black  flex cursor-pointer mr-16`,
   menuItem: `text-lg text-white font-medium flex items-center mx-4 cursor-pointer `,
   item:`text-lg text-white font-medium flex items-center mx-4 cursor-pointer px-3 transition-colors duration-500 border-black border-2 border-dashed bg-black hover:bg-transparent rounded-3xl hover:rounded-lg`,
@@ -43,15 +43,22 @@ const Navbar = () => {
           />
         </div>
         {driver.walletAddress ? (
+          <>
           <div>
             {driver.walletAddress.slice(0, 6)}...{driver.walletAddress.slice(39)}
           </div>
+          <div className={style.loginButton} onClick={() => router.push('/driverlogin')}>
+            <BsPerson />
+            <span className={style.loginText}>Logout</span>
+          </div>
+          </>
         ) : (
           <div className={style.loginButton} onClick={() => router.push('/driverlogin')}>
             <BsPerson />
-            <span className={style.loginText}>Driver Log in</span>
+            <span className={style.loginText}>Log in</span>
           </div>
         )}
+        
       </div>
     </div>
   )

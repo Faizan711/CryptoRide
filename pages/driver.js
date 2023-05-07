@@ -43,7 +43,7 @@ export default function Home() {
           <AvailableRides initialRides={rides} />
         </div>
       ) : (
-        <div>Loading...</div>
+        <div></div>
       )}
     </div>
     </div>
