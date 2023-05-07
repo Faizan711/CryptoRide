@@ -6,6 +6,7 @@ export const UberContext = createContext();
 export const UberProvider = ({ children }) => {
   const [pickup, setPickup] = useState("");
   const [dropoff, setDropoff] = useState("");
+  const [driverCoordinates, setDriverCoordinates] = useState({latitude:null,longitude:null});
   const [pickupCoordinates, setPickupCoordinates] = useState();
   const [dropoffCoordinates, setDropoffCoordinates] = useState();
   const [currentAccount, setCurrentAccount] = useState();
@@ -13,6 +14,15 @@ export const UberProvider = ({ children }) => {
   const [selectedRide, setSelectedRide] = useState([]);
   const [price, setPrice] = useState();
   const [basePrice, setBasePrice] = useState();
+  const [driver, setDriver] = useState({
+    name: "",
+    phone: "",
+    walletAddress: "",
+    address: "",
+    aadhar: "",
+    car_number: "",
+    car_model: "",
+  });
 
   let metamask;
 
@@ -130,6 +140,29 @@ export const UberProvider = ({ children }) => {
     } else return;
   }, [pickup, dropoff]);
 
+  useEffect(() => {
+    try {
+      const storedDriver = window.localStorage.getItem("driver");
+      if (storedDriver) {
+        setDriver(JSON.parse(storedDriver));
+      } else {
+        setDriver({
+          name: "",
+          phone: "",
+          walletAddress: "",
+          address: "",
+          aadhar: "",
+          car_number: "",
+          car_model: "",
+        });
+      }
+    } catch (error) {
+      // Handle error
+      console.error(error);
+    }
+  }, []);
+  
+
   const requestToCreateUserOnSanity = async (address) => {
     if (!window.ethereum) return;
     try {
@@ -165,6 +198,10 @@ export const UberProvider = ({ children }) => {
   return (
     <UberContext.Provider
       value={{
+        driver,
+        setDriver,
+        driverCoordinates,
+        setDriverCoordinates,
         pickup,
         setPickup,
         dropoff,
@@ -173,6 +210,7 @@ export const UberProvider = ({ children }) => {
         setPickupCoordinates,
         dropoffCoordinates,
         setDropoffCoordinates,
+        createLocationCoordinatePromise,
         connectWallet,
         currentAccount,
         currentUser,
