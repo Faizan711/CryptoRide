@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useContext } from "react";
 import { Component } from "react";
 import mapboxgl from "mapbox-gl";
@@ -13,8 +13,10 @@ mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 
 export const Map = () => {
   const [directions, setDirections] = useState([]);
-  const [currentLeg,setCurrentLeg] = useState(0);
+  const [currentLeg, setCurrentLeg] = useState(0);
   const [legs, setLegs] = useState([]);
+  const [map, setMap] = useState(null);
+  var driverMarkerRef = useRef(null);
   const {
     pickupCoordinates,
     dropoffCoordinates,
@@ -24,23 +26,32 @@ export const Map = () => {
   const [currentDirectionIndex, setCurrentDirectionIndex] = useState(0);
 
   const handlePrevClick = () => {
-    if (currentDirectionIndex === 0 && currentLeg == 1) {
+    const newDirectionIndex = Math.max(0, currentDirectionIndex - 1);
+    setDriverCoordinates({
+      longitude: directions[newDirectionIndex].maneuver.location[0],
+      latitude: directions[newDirectionIndex].maneuver.location[1],
+    });
+    if (currentDirectionIndex === 0 && currentLeg === 1) {
       setDirections(legs[0].steps);
-      setCurrentDirectionIndex(legs[0].steps.length - 1);
       setCurrentLeg(0);
+      setCurrentDirectionIndex(legs[0].steps.length - 1);
     } else {
-      setCurrentDirectionIndex(Math.max(0, currentDirectionIndex - 1));
+      setCurrentDirectionIndex(newDirectionIndex);
     }
   };
-  
 
   const handleNextClick = () => {
-    const nextIndex = Math.min(directions.length - 1, currentDirectionIndex + 1);
-    
-    // Check if there are more legs in the `legs` array
-    if (nextIndex === directions.length - 1 && currentLeg == 0) {
+    const nextIndex = Math.min(
+      directions.length - 1,
+      currentDirectionIndex + 1
+    );
+    setDriverCoordinates({
+      longitude: directions[nextIndex].maneuver.location[0],
+      latitude: directions[nextIndex].maneuver.location[1],
+    });
+    if (nextIndex === directions.length - 1 && currentLeg === 0) {
       setDirections(legs[1].steps);
-      setCurrentLeg(1)
+      setCurrentLeg(1);
       setCurrentDirectionIndex(0);
     } else {
       setCurrentDirectionIndex(nextIndex);
@@ -71,6 +82,7 @@ export const Map = () => {
       center: [88.363881, 22.572672],
       zoom: 10,
     });
+    setMap(map);
     map.on("load", async () => {
       if (pickupCoordinates) {
         addToMap(map, pickupCoordinates);
@@ -89,9 +101,9 @@ export const Map = () => {
           const data = await response.json();
           const route = data.routes[0].geometry;
           //TODO: Set ride status to ongoing when driver reaches pickup and also add directions for pickup to destination
-          setLegs(data.routes[0].legs)
-          setCurrentLeg(0)
-          console.log(data.routes[0].legs)
+          setLegs(data.routes[0].legs);
+          console.log(data.routes[0].legs[0].steps[0]);
+          setCurrentLeg(0);
           //This shows directions from current location to pickup point legs[0] , legs[1] for pickup to drop off
           setDirections(data.routes[0].legs[0].steps);
           // Add the route as a source and layer on the map
@@ -113,7 +125,7 @@ export const Map = () => {
               "line-cap": "round",
             },
             paint: {
-              "line-color": "orange",
+              "line-color": "blue",
               "line-width": 3,
             },
           });
@@ -132,6 +144,16 @@ export const Map = () => {
             ])
             .addTo(map);
 
+          const driverMarker = new mapboxgl.Marker({
+            draggable: true,
+            color: "#73094c",
+          })
+            .setLngLat([
+              driverCoordinates.longitude,
+              driverCoordinates.latitude,
+            ])
+            .addTo(map);
+          driverMarkerRef.current = driverMarker;
           // Fit the map to the bounds of the route and markers
           const bounds = route.coordinates.reduce(
             (bounds, coord) => bounds.extend(coord),
@@ -143,16 +165,19 @@ export const Map = () => {
         } catch (error) {
           console.error(error);
         }
-
-        // addLineToMap(map,pickupCoordinates,dropoffCoordinates);
-
-        // map.fitBounds([dropoffCoordinates, pickupCoordinates], {
-        //   padding: 100,
-        // })
       }
     });
   }, [pickupCoordinates, dropoffCoordinates]);
 
+  useEffect(() => {
+    if (driverMarkerRef.current) {
+      console.log(driverMarkerRef.current.getLngLat());
+      driverMarkerRef.current.setLngLat([
+        driverCoordinates.longitude,
+        driverCoordinates.latitude,
+      ]);
+    }
+  }, [driverCoordinates]);
   const addToMap = (map, coordinates) => {
     const marker1 = new mapboxgl.Marker().setLngLat(coordinates).addTo(map);
   };
@@ -169,13 +194,16 @@ export const Map = () => {
           <div>
             <button
               onClick={handlePrevClick}
-              disabled = {currentDirectionIndex === 0 && currentLeg == 0}
+              disabled={currentDirectionIndex === 0 && currentLeg == 0}
             >
               Previous
             </button>
             <button
               onClick={handleNextClick}
-              disabled={currentDirectionIndex === directions.length - 1 && currentLeg == 1}
+              disabled={
+                currentDirectionIndex === directions.length - 1 &&
+                currentLeg == 1
+              }
             >
               Next
             </button>
