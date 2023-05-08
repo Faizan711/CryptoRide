@@ -17,7 +17,7 @@ const AvailableRides = ({ initialRides }) => {
         createLocationCoordinatePromise(rides[index].pickup, "pickup"),
         createLocationCoordinatePromise(rides[index].dropoff, "dropoff"),
       ]);
-      await fetch(`api/db/changeRideStatus?_id=${rides[index]._id}&status=waiting`)
+      //await fetch(`api/db/changeRideStatus?_id=${rides[index]._id}&status=waiting`)
     })();
     setIsVisible(false);
   }
