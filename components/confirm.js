@@ -1,6 +1,7 @@
 import RideSelector from './rideSelector'
 import { useContext } from 'react'
 import { UberContext } from '../context/uberContext'
+import { useRouter } from "next/router";
 import { ethers } from 'ethers'
 
 const style = {
@@ -13,6 +14,7 @@ const style = {
 const Confirm = () => {
   const {
     currentAccount,
+    currentUser,
     pickup,
     dropoff,
     price,
@@ -22,6 +24,8 @@ const Confirm = () => {
     dropoffCoordinates,
     metamask,
   } = useContext(UberContext)
+
+  const router = useRouter();
 
   const storeTripDetails = async (pickup, dropoff) => {
     try {
@@ -72,7 +76,12 @@ const Confirm = () => {
         <div className={style.confirmButtonContainer}>
           <div
             className={style.confirmButton}
-            onClick={() => storeTripDetails(pickup, dropoff)}
+            onClick={() => {
+              storeTripDetails(pickup, dropoff);
+              if(currentUser.length === 0){
+                router.push('/userlogin');
+              };
+            }}
           >
             Confirm {selectedRide.service || 'UberX'}
           </div>
