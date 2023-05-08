@@ -36,10 +36,10 @@ const Navbar = () => {
         </div>
       </div>
       <div className={style.rightMenu}>
-        <div className={style.item}>Ride</div>
-        <div className={style.item}>Driver</div>
+        {/* <div className={style.item}>Ride</div> */}
+        <div className={style.item} onClick={() => router.push('/driverlogin')}>Driver</div>
         <div className={style.item}>More</div>
-        <div className={style.item}>FAQs?</div>
+        <div className={style.item} onClick={() => router.push('/help')}>FAQs?</div>
         <div className={style.menuItem}>{currentUser.name?.split(' ')[0]}</div>
         <div className={style.userImageContainer}>
           <Image
