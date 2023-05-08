@@ -82,7 +82,7 @@ function Help() {
     <div className={style.wrapper}>
     <div className="max-w-screen-xl mx-auto px-5 bg-gradient-to-br from-blue-400 to-indigo-800 min-h-screen">
       <div className="flex flex-col items-center">
-        <h2 className="font-bold text-5xl mt-5 tracking-tight">FAQ</h2>
+        <h2 className="font-bold text-5xl mt-5 tracking-tight">FAQs</h2>
         <p className=" text-2xl mt-3 text-center">Frequently asked questions</p>
       </div>
       <div className="grid divide-y divide-neutral-200 max-w-xl mx-auto mt-8">

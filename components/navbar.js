@@ -39,7 +39,7 @@ const Navbar = () => {
         <div className={style.item}>Ride</div>
         <div className={style.item}>Driver</div>
         <div className={style.item}>More</div>
-        <div className={style.item}>Help</div>
+        <div className={style.item}>FAQs?</div>
         <div className={style.menuItem}>{currentUser.name?.split(' ')[0]}</div>
         <div className={style.userImageContainer}>
           <Image
