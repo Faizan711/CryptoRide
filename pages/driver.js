@@ -38,9 +38,13 @@ export default function Home() {
         <Map />
       </div>
       <div>
-        {rides.length > 0 && (
+        {rides.length > 0 ? (
           <div className="fixed bottom-0 right-0 p-4 z-30">
             <AvailableRides initialRides={rides} />
+          </div>
+        ):(
+          <div className="fixed bottom-0 right-0 p-4 z-30">
+            <AvailableRides />
           </div>
         )}
       </div>

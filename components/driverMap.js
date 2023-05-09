@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { BsArrowLeft, BsArrowRight } from 'react-icons/bs';
 import { useContext } from "react";
 import { Component } from "react";
 import mapboxgl from "mapbox-gl";
@@ -186,17 +187,17 @@ export const Map = () => {
     <div>
       <div className={style.wrapper}>Map</div>
       {directions.length > 0 && (
-        <div className="text-lg fixed top-20 right-0 z-20">
-          <h2>Directions:</h2>
+        <div className="text-lg text-center fixed top-20 right-0 z-20 bg-slate-50 mx-4 p-5 rounded-xl w-80">
+          <h2 className="text-center font-semibold border-b-2">Directions</h2>
           <p>
             {currentDirection.maneuver && currentDirection.maneuver.instruction}
           </p>
-          <div>
+          <div className="flex justify-between mt-2">
             <button
               onClick={handlePrevClick}
               disabled={currentDirectionIndex === 0 && currentLeg == 0}
             >
-              Previous
+              <BsArrowLeft/>
             </button>
             <button
               onClick={handleNextClick}
@@ -205,7 +206,7 @@ export const Map = () => {
                 currentLeg == 1
               }
             >
-              Next
+              <BsArrowRight />
             </button>
           </div>
         </div>
