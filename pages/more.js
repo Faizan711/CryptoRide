@@ -18,7 +18,7 @@ function More() {
     };
 
 const style = {
-    wrapper:`h-screen h-full bg-gradient-to-br pt-4 pb-10 from-blue-400 to-indigo-800`,
+    wrapper:`h-screen h-full bg-gradient-to-br pt-4 pb-10 from-blue-400 to-indigo-800 font-readex`,
     back:`text-lg text-white font-medium flex flex-row w-24 items-center mx-10 cursor-pointer px-3 transition-colors duration-500 border-black border-2 border-dashed bg-black hover:bg-transparent rounded-3xl hover:roundedspan`,
     about:`mx-auto w-4/5 bg-black p-5 mb-10 mt-5 rounded-xl text-white`,
     heading:`text-3xl font-bold text-center text-white`,

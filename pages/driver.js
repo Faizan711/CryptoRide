@@ -5,7 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import { UberContext } from "../context/uberContext";
 
 const style = {
-  wrapper: `h-screen w-screen flex flex-col`,
+  wrapper: `h-screen w-screen flex flex-col font-readex`,
   main: `h-screen w-screen flex-1 z-10 absolute`,
   mapContainer: `flex-1 w-full h-full`,
   rideRequestContainer: `h-screen w-[400px] ml-[1rem] py-[3rem] absolute top-0 left-0 flex flex-col justify-end z-20`,
