@@ -52,16 +52,16 @@ const Confirm = () => {
       }
       let eth_price = BigInt(price*Math.pow(10,18)).toString(16);
       console.log("Eth price = ",eth_price);
-      await metamask.request({
-        method: 'eth_sendTransaction',
-        params: [
-          {
-            from: currentAccount,
-            to: process.env.NEXT_PUBLIC_UBER_ADDRESS,
-            value: eth_price,
-          },
-        ],
-      })
+      // await metamask.request({
+      //   method: 'eth_sendTransaction',
+      //   params: [
+      //     {
+      //       from: currentAccount,
+      //       to: process.env.NEXT_PUBLIC_UBER_ADDRESS,
+      //       value: eth_price,
+      //     },
+      //   ],
+      // })
     } catch (error) {
       console.error(error)
     }
