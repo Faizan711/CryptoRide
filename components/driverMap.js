@@ -179,7 +179,7 @@ export const Map = () => {
   };
 
   return (
-    <div>
+    <div className="font-readex">
       <div className={style.wrapper}>Map</div>
       {directions.length > 0 && (
         <div className="text-lg text-center fixed top-20 right-0 z-20 bg-slate-50 mx-4 p-5 rounded-xl w-80">

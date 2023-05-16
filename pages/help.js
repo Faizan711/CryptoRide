@@ -4,7 +4,7 @@ import { IoIosArrowBack } from 'react-icons/io';
 function Help() {
 
   const style = {
-    wrapper:`bg-gradient-to-br pt-4 from-blue-400 to-indigo-800`,
+    wrapper:`bg-gradient-to-br pt-4 from-blue-400 to-indigo-800 font-readex`,
     back:`text-lg text-white font-medium flex flex-row w-1/12 items-center mx-4 cursor-pointer px-3 transition-colors duration-500 border-black border-2 border-dashed bg-black hover:bg-transparent rounded-3xl hover:roundedspan`,
   }
 

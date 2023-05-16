@@ -38,7 +38,7 @@ const Navbar = () => {
       <div className={style.rightMenu}>
         {/* <div className={style.logo}>CryptoRide</div> */}
         <div className={style.item} onClick={() => router.push('/')}>Ride</div>
-        <div className={style.item}>More</div>
+        <div className={style.item} onClick={() => router.push('/more')}>More</div>
         <div className={style.item} onClick={() => router.push('/help')}>FAQs?</div>
         <div className={style.menuItem}>{driver.name?.split(' ')[0]}</div>
         <div className={style.userImageContainer}>
