@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import avatar from '../temp/avatar.jpg'
+import logo from "../assets/sitelogo.png"
 import { BsPerson } from 'react-icons/bs'
 import { useContext } from 'react'
 import { UberContext } from '../context/uberContext'
@@ -26,12 +27,19 @@ const Navbar = () => {
   return (
     <div className={style.wrapper}>
       <div className={style.leftMenu}>
-        <div className={style.logo}>CryptoRide</div>
-        <div className={style.item}>Ride</div>
-        <div className={style.item}>More</div>
+        <div>
+          <Image
+            src={logo}
+            width={75}
+            height={50}
+          />
+        </div>
       </div>
       <div className={style.rightMenu}>
-        <div className={style.item}>Help</div>
+        {/* <div className={style.logo}>CryptoRide</div> */}
+        <div className={style.item} onClick={() => router.push('/')}>Ride</div>
+        <div className={style.item} onClick={() => router.push('/more')}>More</div>
+        <div className={style.item} onClick={() => router.push('/help')}>FAQs?</div>
         <div className={style.menuItem}>{driver.name?.split(' ')[0]}</div>
         <div className={style.userImageContainer}>
           <Image
