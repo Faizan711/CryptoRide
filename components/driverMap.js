@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { BsArrowLeft, BsArrowRight } from 'react-icons/bs';
+import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import { useContext } from "react";
 import { Component } from "react";
 import mapboxgl from "mapbox-gl";
@@ -14,8 +14,6 @@ mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 
 export const Map = () => {
   const [directions, setDirections] = useState([]);
-  const [currentLeg, setCurrentLeg] = useState(0);
-  const [legs, setLegs] = useState([]);
   const [map, setMap] = useState(null);
   var driverMarkerRef = useRef(null);
   const {
@@ -32,13 +30,7 @@ export const Map = () => {
       longitude: directions[newDirectionIndex].maneuver.location[0],
       latitude: directions[newDirectionIndex].maneuver.location[1],
     });
-    if (currentDirectionIndex === 0 && currentLeg === 1) {
-      setDirections(legs[0].steps);
-      setCurrentLeg(0);
-      setCurrentDirectionIndex(legs[0].steps.length - 1);
-    } else {
-      setCurrentDirectionIndex(newDirectionIndex);
-    }
+    setCurrentDirectionIndex(newDirectionIndex);
   };
 
   const handleNextClick = () => {
@@ -50,13 +42,7 @@ export const Map = () => {
       longitude: directions[nextIndex].maneuver.location[0],
       latitude: directions[nextIndex].maneuver.location[1],
     });
-    if (nextIndex === directions.length - 1 && currentLeg === 0) {
-      setDirections(legs[1].steps);
-      setCurrentLeg(1);
-      setCurrentDirectionIndex(0);
-    } else {
-      setCurrentDirectionIndex(nextIndex);
-    }
+    setCurrentDirectionIndex(nextIndex);
   };
 
   const currentDirection = directions[currentDirectionIndex] || {};
@@ -101,12 +87,21 @@ export const Map = () => {
           );
           const data = await response.json();
           const route = data.routes[0].geometry;
-          //TODO: Set ride status to ongoing when driver reaches pickup and also add directions for pickup to destination
-          setLegs(data.routes[0].legs);
-          console.log(data.routes[0].legs[0].steps[0]);
-          setCurrentLeg(0);
-          //This shows directions from current location to pickup point legs[0] , legs[1] for pickup to drop off
-          setDirections(data.routes[0].legs[0].steps);
+
+          const directions = data.routes.flatMap((route) =>
+            route.legs.flatMap((leg) => leg.steps)
+          );
+          directions.push({
+            maneuver: {
+              instruction: "You have reached your destination.",
+              location: [dropoffCoordinates[0], dropoffCoordinates[1]],
+            },
+          });
+          // Set the directions array and current leg to the first leg
+          setDirections(directions);
+
+          console.log(directions);
+
           // Add the route as a source and layer on the map
           map.addSource("route", {
             type: "geojson",
@@ -172,7 +167,7 @@ export const Map = () => {
 
   useEffect(() => {
     if (driverMarkerRef.current) {
-      console.log(driverMarkerRef.current.getLngLat());
+      //console.log(driverMarkerRef.current.getLngLat());
       driverMarkerRef.current.setLngLat([
         driverCoordinates.longitude,
         driverCoordinates.latitude,
@@ -195,16 +190,13 @@ export const Map = () => {
           <div className="flex justify-between mt-2">
             <button
               onClick={handlePrevClick}
-              disabled={currentDirectionIndex === 0 && currentLeg == 0}
+              disabled={currentDirectionIndex === 0}
             >
-              <BsArrowLeft/>
+              <BsArrowLeft />
             </button>
             <button
               onClick={handleNextClick}
-              disabled={
-                currentDirectionIndex === directions.length - 1 &&
-                currentLeg == 1
-              }
+              disabled={currentDirectionIndex === directions.length - 1}
             >
               <BsArrowRight />
             </button>

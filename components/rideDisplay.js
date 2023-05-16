@@ -5,7 +5,7 @@ const AvailableRides = ({ initialRides }) => {
   const [rides, setRides] = useState(initialRides);
   const [isVisible, setIsVisible] = useState(true);
 
-  const { createLocationCoordinatePromise } = useContext(UberContext);
+  const { createLocationCoordinatePromise,setPrice,setCurrentAccount } = useContext(UberContext);
 
   const handleReject = (index) => {
     setRides((prevRides) => prevRides.filter((ride, i) => i !== index));
@@ -17,7 +17,10 @@ const AvailableRides = ({ initialRides }) => {
         createLocationCoordinatePromise(rides[index].pickup, "pickup"),
         createLocationCoordinatePromise(rides[index].dropoff, "dropoff"),
       ]);
-      await fetch(`api/db/changeRideStatus?_id=${rides[index]._id}&status=waiting`)
+      console.log(rides[index])
+      setCurrentAccount(rides[index].passenger._ref)
+      setPrice(rides[index].price)
+      //await fetch(`api/db/changeRideStatus?_id=${rides[index]._id}&status=waiting`)
     })();
     setIsVisible(false);
   }

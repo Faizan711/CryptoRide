@@ -6,7 +6,10 @@ export const UberContext = createContext();
 export const UberProvider = ({ children }) => {
   const [pickup, setPickup] = useState("");
   const [dropoff, setDropoff] = useState("");
-  const [driverCoordinates, setDriverCoordinates] = useState({latitude:null,longitude:null});
+  const [driverCoordinates, setDriverCoordinates] = useState({
+    latitude: null,
+    longitude: null,
+  });
   const [pickupCoordinates, setPickupCoordinates] = useState();
   const [dropoffCoordinates, setDropoffCoordinates] = useState();
   const [currentAccount, setCurrentAccount] = useState();
@@ -33,6 +36,30 @@ export const UberProvider = ({ children }) => {
   useEffect(() => {
     checkIfWalletIsConnected();
   }, []);
+
+  const rideComplete = async () => {
+    console.log("called ride completed , current account wallet address "+currentAccount);
+    let eth_price = BigInt(price*Math.pow(10,18)).toString(16);
+    await metamask.request({
+      method: "eth_sendTransaction",
+      params: [
+        {
+          from: currentAccount,
+          to: driver.walletAddress,
+          value: eth_price,
+        },
+      ],
+    });
+    await fetch(
+      `api/db/changeRideStatus?_id=${rides[index]._id}&status=completed`
+    );
+  };
+
+  useEffect(() => {
+    if (dropoffCoordinates && driverCoordinates.longitude == dropoffCoordinates[0] && driverCoordinates.latitude == dropoffCoordinates[1]) {
+      rideComplete();
+    }
+  }, [driverCoordinates]);
 
   useEffect(() => {
     if (!currentAccount) return;
@@ -161,7 +188,6 @@ export const UberProvider = ({ children }) => {
       console.error(error);
     }
   }, []);
-  
 
   const requestToCreateUserOnSanity = async (address) => {
     if (!window.ethereum) return;
@@ -204,6 +230,7 @@ export const UberProvider = ({ children }) => {
         setDriverCoordinates,
         pickup,
         setPickup,
+        setCurrentAccount,
         dropoff,
         setDropoff,
         pickupCoordinates,
