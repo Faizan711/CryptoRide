@@ -1,5 +1,5 @@
 import RideSelector from './rideSelector'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { UberContext } from '../context/uberContext'
 import { useRouter } from "next/router";
 import { ethers } from 'ethers'
@@ -9,9 +9,24 @@ const style = {
   rideSelectorContainer: `h-full flex flex-col overflow-scroll`,
   confirmButtonContainer: ` border-t-2 cursor-pointer z-10 `,
   confirmButton: `bg-gradient-to-br from-blue-400 to-indigo-800 text-white m-4 py-4 transition-colors duration-500 text-center text-xl font-semibold rounded-xl  hover:from-blue-300 hover:to-indigo-900 hover:text-black`,
+  modal: `bg-white text-black`
 }
 
 const Confirm = () => {
+
+  //code for user modal below
+  const [isModalOpen, setIsModalOpen] = useState(true);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  let rideStatus = true;
+
   const {
     currentAccount,
     currentUser,
@@ -77,17 +92,53 @@ const Confirm = () => {
           <div
             className={style.confirmButton}
             onClick={() => {
-              storeTripDetails(pickup, dropoff);
               if(currentUser.length === 0){
                 router.push('/userlogin');
               };
+              if (pickupCoordinates !== undefined && dropoffCoordinates !== undefined) {
+                // storeTripDetails(pickup, dropoff);
+                openModal();
+              }
             }}
           >
             Confirm {selectedRide.service || 'UberX'}
           </div>
         </div>
       </div>
-    </div>
+      {rideStatus === true ?
+        <>
+        <div className={`fixed flex bg-gray-100 flex-row items-center justify-center rounded-2xl p-5 left-52 top-20 h-3/4 w-2/3 z-50 bg-white text-black ${isModalOpen ? 'block' : 'hidden'}`}>
+          <div className="bg-white p-10 mr-4 rounded-lg h-full w-1/3">
+            <div className="mb-4">
+              <h3 className="text-xl font-bold">Driver Details</h3>
+            </div>
+            <div className="mb-8">
+              <p>Driver name</p>
+              <p>Driver phone number</p>
+            </div>
+            
+              <button
+                className="px-4 py-2 bottom-0 bg-black text-white rounded-3xl hover:bg-gray-600"
+                onClick={() => closeModal()}
+              >
+                Close
+              </button>
+            
+          </div>
+          <div className='w-2/3'> map goes here</div>
+        </div>
+        </>
+       :
+        <>
+          <div className={`fixed flex bg-white flex-row items-center justify-center rounded-2xl p-5 left-1/3 top-1/3 h-1/4 w-1/3 z-50 text-black ${isModalOpen ? 'block' : 'hidden'}`}>
+            <span className="mr-2 animate-spin text-3xl">🔄</span>
+            <h1 className='text-3xl text-center'>Waiting for Ride to be accepted by Driver</h1>
+          </div>
+        </>
+      }
+        
+      </div>
+    
   )
 }
 
