@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { BsArrowLeft, BsArrowRight } from 'react-icons/bs';
 import { useContext } from "react";
 import { Component } from "react";
+import { FaMapMarkerAlt } from 'react-icons/fa';
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { UberContext } from "../context/uberContext";
@@ -188,7 +189,11 @@ export const Map = () => {
       <div className={style.wrapper}>Map</div>
       {directions.length > 0 && (
         <div className="text-lg text-center fixed top-20 right-0 z-20 bg-slate-50 mx-4 p-5 rounded-xl w-80">
-          <h2 className="text-center font-semibold border-b-2">Directions</h2>
+          <h2 className="text-center font-semibold border-b-2">Directions </h2>
+          <div className="flex flex-row justify-center items-center border-2 border-bg-slate-50">
+            <FaMapMarkerAlt style={{color: '#72094C'}}/>
+            <p> - You are here</p>
+          </div>
           <p>
             {currentDirection.maneuver && currentDirection.maneuver.instruction}
           </p>
