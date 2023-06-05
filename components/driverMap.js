@@ -21,6 +21,7 @@ export const Map = () => {
     dropoffCoordinates,
     setDriverCoordinates,
     driverCoordinates,
+    selectedRideId,
   } = useContext(UberContext);
   const [currentDirectionIndex, setCurrentDirectionIndex] = useState(0);
 
@@ -61,6 +62,38 @@ export const Map = () => {
     }
   }, []);
 
+  const rideComplete = async () => {
+    console.log("called ride completed , current ride id = " + selectedRideId);
+    await fetch(
+      `api/db/changeRideStatus?_id=${selectedRideId}&status=completed`
+    );
+  };
+
+  const startRide = async () =>{
+    console.log("Changing ride status to started.")
+    await fetch(
+      `api/db/changeRideStatus?_id=${selectedRideId}&status=ongoing`
+    );
+  }
+
+  useEffect(() => {
+    console.log("Checking driver coordinates");
+    if (
+      dropoffCoordinates &&
+      driverCoordinates.longitude == dropoffCoordinates[0] &&
+      driverCoordinates.latitude == dropoffCoordinates[1]
+    ) {
+      rideComplete();
+    }
+    if (
+      dropoffCoordinates &&
+      driverCoordinates.longitude == pickupCoordinates[0] &&
+      driverCoordinates.latitude == pickupCoordinates[1]
+    ) {
+      startRide();
+    }
+  }, [driverCoordinates]);
+
   useEffect(() => {
     const map = new mapboxgl.Map({
       container: "map",
@@ -91,6 +124,13 @@ export const Map = () => {
           const directions = data.routes.flatMap((route) =>
             route.legs.flatMap((leg) => leg.steps)
           );
+          console.log(data.routes[0].legs[0].steps);
+          directions.splice(data.routes[0].legs[0].steps.length, 0, {
+            maneuver: {
+              instruction: "You have reached the pickup location.",
+              location: [pickupCoordinates[0], pickupCoordinates[1]],
+            },
+          });
           directions.push({
             maneuver: {
               instruction: "You have reached your destination.",

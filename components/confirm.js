@@ -44,7 +44,7 @@ const Confirm = () => {
           selectedRide: selectedRide,
         }),
       })
-      console.log(price)
+      console.log(currentAccount)
       if (typeof price === 'undefined') {
         console.error('Setting default price value.')
         setPrice(0.002)
