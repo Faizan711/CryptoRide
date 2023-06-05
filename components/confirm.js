@@ -1,5 +1,5 @@
 import RideSelector from './rideSelector'
-import { useContext, useState } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { UberContext } from '../context/uberContext'
 import { useRouter } from "next/router";
 import { ethers } from 'ethers'
@@ -51,13 +51,15 @@ const Confirm = () => {
 
   const storeTripDetails = async (pickup, dropoff) => {
     try {
-      console.log(selectedRide);
+      // console.log(selectedRide);
+      setRideId(`${currentAccount}-${Date.now()}`);
       await fetch('/api/db/saveTrips', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          id: rideId,
           pickupLocation: pickup,
           dropoffLocation: dropoff,
           userWalletAddress: currentAccount,
@@ -84,12 +86,33 @@ const Confirm = () => {
       //     },
       //   ],
       // })
-      setRideId(`${currentAccount}-${Date.now()}`);
-      // console.log(rideId);
+      // setRideId(`${currentAccount}-${Date.now()}`);
+      console.log(rideId);
+      // console.log(rideStatus);
     } catch (error) {
       console.error(error)
     }
   }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`/api/db/checkRideStatus?id=${rideId}`);
+        const data = await response.json();
+        setRideStatus(data.data[0].status);
+        console.log(data.data[0].status);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+  
+    const intervalId = setInterval(fetchData, 10000);
+  
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
+  
 
   return (
     <div className={style.wrapper}>
@@ -114,7 +137,7 @@ const Confirm = () => {
           </div>
         </div>
       </div>
-      {rideStatus === 'booked' ?
+      {rideStatus !== 'booked' ?
         <>
         <div className={`fixed flex bg-gray-100 flex-row items-center justify-center rounded-2xl p-5 left-4 top-20 h-4/5 w-1/3 z-50 bg-white text-black ${isModalOpen ? 'block' : 'hidden'}`}>
           <div className="bg-white p-10 mr-4 rounded-lg h-full w-full">

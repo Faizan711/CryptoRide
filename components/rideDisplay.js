@@ -41,6 +41,7 @@ const AvailableRides = ({ initialRides }) => {
 
   useEffect(() => {
     setRides(initialRides);
+    // console.log("fetching");
   }, [initialRides]);
 
   useEffect(() => {
