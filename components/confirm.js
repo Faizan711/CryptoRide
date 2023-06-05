@@ -53,6 +53,7 @@ const Confirm = () => {
     try {
       // console.log(selectedRide);
       setRideId(`${currentAccount}-${Date.now()}`);
+      console.log(rideId);
       await fetch('/api/db/saveTrips', {
         method: 'POST',
         headers: {
@@ -129,6 +130,7 @@ const Confirm = () => {
               };
               if (pickupCoordinates !== undefined && dropoffCoordinates !== undefined) {
                 storeTripDetails(pickup, dropoff);
+                // console.log("trip called");
                 openModal();
               }
             }}
