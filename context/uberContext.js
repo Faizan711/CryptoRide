@@ -6,7 +6,10 @@ export const UberContext = createContext();
 export const UberProvider = ({ children }) => {
   const [pickup, setPickup] = useState("");
   const [dropoff, setDropoff] = useState("");
-  const [driverCoordinates, setDriverCoordinates] = useState({latitude:null,longitude:null});
+  const [driverCoordinates, setDriverCoordinates] = useState({
+    latitude: null,
+    longitude: null,
+  });
   const [pickupCoordinates, setPickupCoordinates] = useState();
   const [dropoffCoordinates, setDropoffCoordinates] = useState();
   const [currentAccount, setCurrentAccount] = useState();
@@ -14,6 +17,7 @@ export const UberProvider = ({ children }) => {
   const [selectedRide, setSelectedRide] = useState([]);
   const [price, setPrice] = useState();
   const [basePrice, setBasePrice] = useState();
+  const [selectedRideId,setSelectedRideId] = useState()
   const [driver, setDriver] = useState({
     name: "",
     phone: "",
@@ -161,7 +165,6 @@ export const UberProvider = ({ children }) => {
       console.error(error);
     }
   }, []);
-  
 
   const requestToCreateUserOnSanity = async (address) => {
     if (!window.ethereum) return;
@@ -204,6 +207,7 @@ export const UberProvider = ({ children }) => {
         setDriverCoordinates,
         pickup,
         setPickup,
+        setCurrentAccount,
         dropoff,
         setDropoff,
         pickupCoordinates,
@@ -220,6 +224,8 @@ export const UberProvider = ({ children }) => {
         requestToCreateUserOnSanity,
         requestToGetCurrentUsersInfo,
         price,
+        selectedRideId,
+        setSelectedRideId,
         setPrice,
         basePrice,
         metamask,

@@ -47,5 +47,11 @@ export const tripSchema = {
       title: 'Passenger',
       to: [{type: 'users'}],
     },
+    {
+      name: 'driver',
+      type: 'reference',
+      title: 'Driver',
+      to: [{type: 'drivers'}],
+    },
   ],
 }
