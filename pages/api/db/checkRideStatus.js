@@ -6,7 +6,7 @@ const checkRideStatus = async (req, res) => {
         status
       }`;
     const response = await client.fetch(query);
-    console.log(response);
+    //console.log(response);
     res.status(200).send({ message: "success", data: response });
   } catch (err) {
     console.log(err);
