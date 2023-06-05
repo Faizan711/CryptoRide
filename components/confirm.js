@@ -19,7 +19,7 @@ const Confirm = () => {
   const [isClickBlocked, setIsClickBlocked] = useState(false);
   const [rideStatus, setRideStatus] = useState('booked');
 
-  const openModal = (event) => {
+  const openModal = () => {
     setIsModalOpen(true);
     setIsClickBlocked(true);
   };
