@@ -5,7 +5,7 @@ const AvailableRides = ({ initialRides }) => {
   const [rides, setRides] = useState(initialRides);
   const [isVisible, setIsVisible] = useState(true);
 
-  const { createLocationCoordinatePromise,setPrice,setCurrentAccount } = useContext(UberContext);
+  const { createLocationCoordinatePromise,setPrice,setCurrentAccount,setSelectedRideId,driver } = useContext(UberContext);
 
   const handleReject = (index) => {
     setRides((prevRides) => prevRides.filter((ride, i) => i !== index));
@@ -17,14 +17,26 @@ const AvailableRides = ({ initialRides }) => {
         createLocationCoordinatePromise(rides[index].pickup, "pickup"),
         createLocationCoordinatePromise(rides[index].dropoff, "dropoff"),
       ]);
-      await fetch(`api/db/changeRideStatus?_id=${rides[index]._id}&status=waiting`)
-      console.log(rides[index])
-      setCurrentAccount(rides[index].passenger._ref)
-      setPrice(rides[index].price)
-      //await fetch(`api/db/changeRideStatus?_id=${rides[index]._id}&status=waiting`)
+  
+      console.log(rides[index]);
+      setCurrentAccount(rides[index].passenger._ref);
+      setPrice(rides[index].price);
+      setSelectedRideId(rides[index]._id);
+  
+      const driverId = `${driver.walletAddress}${driver.phone}`;
+      const tripId = rides[index]._id;
+  
+      // Set driver for the trip
+      await fetch(`/api/db/changeTripDriver?tripId=${tripId}&driverId=${driverId}`, {
+        method: 'PUT',
+      });
+  
+      await fetch(`/api/db/changeRideStatus?_id=${rides[index]._id}&status=waiting`);
     })();
+  
     setIsVisible(false);
-  }
+  };
+  
 
   useEffect(() => {
     setRides(initialRides);

@@ -17,6 +17,7 @@ export const UberProvider = ({ children }) => {
   const [selectedRide, setSelectedRide] = useState([]);
   const [price, setPrice] = useState();
   const [basePrice, setBasePrice] = useState();
+  const [selectedRideId,setSelectedRideId] = useState()
   const [driver, setDriver] = useState({
     name: "",
     phone: "",
@@ -36,30 +37,6 @@ export const UberProvider = ({ children }) => {
   useEffect(() => {
     checkIfWalletIsConnected();
   }, []);
-
-  const rideComplete = async () => {
-    console.log("called ride completed , current account wallet address "+currentAccount);
-    let eth_price = BigInt(price*Math.pow(10,18)).toString(16);
-    await metamask.request({
-      method: "eth_sendTransaction",
-      params: [
-        {
-          from: currentAccount,
-          to: driver.walletAddress,
-          value: eth_price,
-        },
-      ],
-    });
-    await fetch(
-      `api/db/changeRideStatus?_id=${rides[index]._id}&status=completed`
-    );
-  };
-
-  useEffect(() => {
-    if (dropoffCoordinates && driverCoordinates.longitude == dropoffCoordinates[0] && driverCoordinates.latitude == dropoffCoordinates[1]) {
-      rideComplete();
-    }
-  }, [driverCoordinates]);
 
   useEffect(() => {
     if (!currentAccount) return;
@@ -247,6 +224,8 @@ export const UberProvider = ({ children }) => {
         requestToCreateUserOnSanity,
         requestToGetCurrentUsersInfo,
         price,
+        selectedRideId,
+        setSelectedRideId,
         setPrice,
         basePrice,
         metamask,
