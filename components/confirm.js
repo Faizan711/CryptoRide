@@ -17,15 +17,19 @@ const Confirm = () => {
   //code for user modal below
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isClickBlocked, setIsClickBlocked] = useState(false);
-  const [rideStatus, setRideStatus] = useState('booked');
+  const [rideStatus, setRideStatus] = useState("booked");
 
   const openModal = () => {
     setIsModalOpen(true);
+    // setTimeout( () => {
+    //   setRideStatus("waiting");
+    // },15000);
     setIsClickBlocked(true);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
+    setRideStatus("booked");
     setIsClickBlocked(false);
   };
 
@@ -46,6 +50,8 @@ const Confirm = () => {
     rideId,
     setRideId,
   } = useContext(UberContext)
+
+  setRideId("booked");
 
   const router = useRouter();
 
@@ -88,7 +94,7 @@ const Confirm = () => {
       //   ],
       // })
       // setRideId(`${currentAccount}-${Date.now()}`);
-      console.log(rideId);
+      //console.log(rideId);
       // console.log(rideStatus);
     } catch (error) {
       console.error(error)
@@ -106,13 +112,14 @@ const Confirm = () => {
         console.error('Error fetching data:', error);
       }
     };
-  
+    
+    // fetchData();
     const intervalId = setInterval(fetchData, 10000);
   
     return () => {
       clearInterval(intervalId);
     };
-  }, []);
+  }, [rideStatus]);
   
 
   return (
@@ -147,8 +154,9 @@ const Confirm = () => {
               <h3 className="text-xl font-bold">Driver Details</h3>
             </div>
             <div className="mb-8">
-              <p>Driver name</p>
-              <p>Driver phone number</p>
+              <p>Ian Mante</p>
+              <p>9856423587</p>
+              <h4>Call your Driver!!</h4>
             </div>
             
               <button
