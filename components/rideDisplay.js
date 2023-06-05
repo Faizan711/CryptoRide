@@ -8,7 +8,8 @@ const AvailableRides = ({ initialRides }) => {
   const { createLocationCoordinatePromise,setPrice,setCurrentAccount,setSelectedRideId,driver } = useContext(UberContext);
 
   const handleReject = (index) => {
-    setRides((prevRides) => prevRides.filter((ride, i) => i !== index));
+    setRides((initialRides) => initialRides.filter((ride, i) => i !== index));
+    
   };
 
   const handleConfirm = (index) => {
@@ -48,7 +49,7 @@ const AvailableRides = ({ initialRides }) => {
 
   return (
     <>
-    {isVisible && (<div className="bg-slate-50 p-4 rounded-lg shadow-lg fixed bottom-0 right-0 mb-8 mr-8">
+    {isVisible && (<div className="bg-slate-50 p-4 max-h-96 rounded-lg shadow-lg fixed bottom-0 right-0 mb-8 mr-8 overflow-scroll">
       <h2 className="text-lg font-medium text-center mb-4 border-b-2">AVAILABLE RIDES</h2>
       {Array.isArray(rides) && rides.length > 0 ? (
         rides.filter((ride) => Object.keys(ride).some(key => !!ride[key])).map((ride, index) => (

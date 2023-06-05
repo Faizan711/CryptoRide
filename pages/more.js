@@ -13,7 +13,7 @@ function More() {
   
     const handleSubmit = (event) => {
       event.preventDefault();
-      console.log({ name, email, message });
+    //   console.log({ name, email, message });
       // Add your code for submitting the form data here
     };
 
@@ -60,7 +60,7 @@ const handleGoBack = () => {
             <h2 className={style.heading}>Got Any Question? Contact Us</h2>
         </div>
         <div className={style.contact}>
-        <form onSubmit={handleSubmit} className="max-w-lg mx-auto">
+        <form className="max-w-lg mx-auto" method='POST' id='contactForm' action='https://fabform.io/f/P66wHtj'>
             <div className="mb-4">
                 <label className="block text-white font-bold mb-2" htmlFor="name">
                 Name
@@ -70,6 +70,8 @@ const handleGoBack = () => {
                 id="name"
                 type="text"
                 placeholder="Enter your name"
+                required
+                name='name'
                 value={name}
                 onChange={(event) => setName(event.target.value)}
                 />
@@ -83,6 +85,8 @@ const handleGoBack = () => {
                 id="email"
                 type="email"
                 placeholder="Enter your email"
+                required
+                name='email'
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
                 />
@@ -95,6 +99,8 @@ const handleGoBack = () => {
                 className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="message"
                 placeholder="Enter your message"
+                required
+                name='message'
                 value={message}
                 onChange={(event) => setMessage(event.target.value)}
                 />
