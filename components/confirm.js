@@ -15,17 +15,22 @@ const style = {
 const Confirm = () => {
 
   //code for user modal below
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isClickBlocked, setIsClickBlocked] = useState(false);
+  const [rideStatus, setRideStatus] = useState(true);
 
-  const openModal = () => {
+  const openModal = (event) => {
     setIsModalOpen(true);
+    setIsClickBlocked(true);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
+    setIsClickBlocked(false);
   };
 
-  let rideStatus = true;
+  const confirmButtonContainerClasses = isClickBlocked ? "confirmButtonContainer hidden" : "confirmButtonContainer";
+
 
   const {
     currentAccount,
@@ -87,7 +92,7 @@ const Confirm = () => {
       <div className={style.rideSelectorContainer}>
         {pickupCoordinates && dropoffCoordinates && <RideSelector />}
       </div>
-      <div className={style.confirmButtonContainer}>
+      <div className={confirmButtonContainerClasses}>
         <div className={style.confirmButtonContainer}>
           <div
             className={style.confirmButton}
@@ -107,8 +112,8 @@ const Confirm = () => {
       </div>
       {rideStatus === true ?
         <>
-        <div className={`fixed flex bg-gray-100 flex-row items-center justify-center rounded-2xl p-5 left-52 top-20 h-3/4 w-2/3 z-50 bg-white text-black ${isModalOpen ? 'block' : 'hidden'}`}>
-          <div className="bg-white p-10 mr-4 rounded-lg h-full w-1/3">
+        <div className={`fixed flex bg-gray-100 flex-row items-center justify-center rounded-2xl p-5 left-4 top-20 h-4/5 w-1/3 z-50 bg-white text-black ${isModalOpen ? 'block' : 'hidden'}`}>
+          <div className="bg-white p-10 mr-4 rounded-lg h-full w-full">
             <div className="mb-4">
               <h3 className="text-xl font-bold">Driver Details</h3>
             </div>
@@ -125,8 +130,9 @@ const Confirm = () => {
               </button>
             
           </div>
-          <div className='w-2/3'> map goes here</div>
+          
         </div>
+        
         </>
        :
         <>
