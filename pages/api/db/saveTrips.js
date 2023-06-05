@@ -4,7 +4,7 @@ const saveTrips = async (req, res) => {
   try {
     const tripDoc = {
       _type: 'trips',
-      _id: `${req.body.userWalletAddress}-${Date.now()}`,
+      _id: req.body.id,
       pickup: req.body.pickupLocation,
       dropoff: req.body.dropoffLocation,
       rideTimestamp: new Date(Date.now()).toISOString(),
