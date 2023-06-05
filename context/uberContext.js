@@ -12,6 +12,7 @@ export const UberProvider = ({ children }) => {
   });
   const [pickupCoordinates, setPickupCoordinates] = useState();
   const [dropoffCoordinates, setDropoffCoordinates] = useState();
+  const [rideId,setRideId] = useState('');
   const [currentAccount, setCurrentAccount] = useState();
   const [currentUser, setCurrentUser] = useState([]);
   const [selectedRide, setSelectedRide] = useState([]);
@@ -229,6 +230,8 @@ export const UberProvider = ({ children }) => {
         setPrice,
         basePrice,
         metamask,
+        rideId,
+        setRideId,
       }}
     >
       {children}
