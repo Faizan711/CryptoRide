@@ -17,7 +17,7 @@ const Confirm = () => {
   //code for user modal below
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isClickBlocked, setIsClickBlocked] = useState(false);
-  const [rideStatus, setRideStatus] = useState(true);
+  const [rideStatus, setRideStatus] = useState('booked');
 
   const openModal = (event) => {
     setIsModalOpen(true);
@@ -43,6 +43,8 @@ const Confirm = () => {
     pickupCoordinates,
     dropoffCoordinates,
     metamask,
+    rideId,
+    setRideId,
   } = useContext(UberContext)
 
   const router = useRouter();
@@ -82,6 +84,8 @@ const Confirm = () => {
       //     },
       //   ],
       // })
+      setRideId(`${currentAccount}-${Date.now()}`);
+      // console.log(rideId);
     } catch (error) {
       console.error(error)
     }
@@ -101,7 +105,7 @@ const Confirm = () => {
                 router.push('/userlogin');
               };
               if (pickupCoordinates !== undefined && dropoffCoordinates !== undefined) {
-                // storeTripDetails(pickup, dropoff);
+                storeTripDetails(pickup, dropoff);
                 openModal();
               }
             }}
@@ -110,7 +114,7 @@ const Confirm = () => {
           </div>
         </div>
       </div>
-      {rideStatus === true ?
+      {rideStatus === 'booked' ?
         <>
         <div className={`fixed flex bg-gray-100 flex-row items-center justify-center rounded-2xl p-5 left-4 top-20 h-4/5 w-1/3 z-50 bg-white text-black ${isModalOpen ? 'block' : 'hidden'}`}>
           <div className="bg-white p-10 mr-4 rounded-lg h-full w-full">
