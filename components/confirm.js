@@ -153,11 +153,7 @@ const Confirm = () => {
             <div className="mb-4">
               <h3 className="text-xl font-bold">Driver Details</h3>
             </div>
-            <div className="mb-8">
-              <p>Ian Mante</p>
-              <p>9856423587</p>
-              <h4>Call your Driver!!</h4>
-            </div>
+            
             
               <button
                 className="px-4 py-2 bottom-0 bg-black text-white rounded-3xl hover:bg-gray-600"
