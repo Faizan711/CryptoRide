@@ -29,8 +29,12 @@ const Confirm = () => {
   const [rideId, setRideId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isClickBlocked, setIsClickBlocked] = useState(false);
-  const [driverDetails, setDriverDetails] = useState();
-
+  const [driverName, setDriverName] = useState('');
+  const[driverPhone,setDriverPhone] =useState('')
+  const [paymentBool,setPaymentBool] = useState(false)
+  const [driverCarNumber,setDriverCarNumber] = useState()
+  const [driverWalletAddress,setDriverWalletAddress] = useState('')
+  const router=useRouter()
   const openModal = () => {
     setIsModalOpen(true);
     setIsClickBlocked(true);
@@ -42,7 +46,26 @@ const Confirm = () => {
   };
 
   const confirmButtonContainerClasses = isClickBlocked ? "confirmButtonContainer hidden" : "confirmButtonContainer";
-
+  const payment = async()=>{
+    console.log(price);
+      if (typeof price === "undefined") {
+        console.error("Setting default price value.");
+        setPrice(0.002);
+        console.log("New Price = ", price);
+      }
+      let eth_price = BigInt(price * Math.pow(10, 18)).toString(16);
+      console.log("Eth price = ", eth_price);
+      await metamask.request({
+        method: "eth_sendTransaction",
+        params: [
+          {
+            from: currentAccount,
+            to: driverWalletAddress,
+            value: eth_price,
+          },
+        ],
+      });
+  }
   useEffect(() => {
     if (rideId !== null) {
       //console.log(rideId)
@@ -63,32 +86,48 @@ const Confirm = () => {
 
   }, [rideId]);
 
-  // const myFunction = () => {
-  //   setTimeout(getDriverDetails, 20000); // Delayed function will be called after 10 seconds
-  // };
-
-  // const getDriverDetails = async() => {
-  //   try {
-  //     const response = await fetch(`/api/db/getRideDriver?id=${rideId}`);
-  //     let data = await response.json();
-  //     console.log(data);
-  //     setDriverDetails(data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-
+  const getDriverDetails = async () => {
+    try {
+      const response = await fetch(`/api/db/getRideDriver?id=${rideId}`);
+      const data = await response.json();
+      console.log(data);
+      setDriverName(data.name);
+      setDriverPhone(data.phone)
+      setDriverCarNumber(data.car_number)
+      setDriverWalletAddress(data.walletAddress)
+       // Update the driverDetails state with the fetched data
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
   const getRideStatus = async (id) => {
     try {
       console.log(rideId);
       const response = await fetch(`/api/db/checkRideStatus?id=${rideId}`);
       let data = await response.json();
       setRideStatus(data.data[0].status);
-      console.log(data.data);
+      console.log(data.data[0].status);
+      if(data.data[0].status == 'completed')
+      {
+        setPaymentBool(true)
+      }
+      if(data.data[0].status == 'waiting')
+      {
+        getDriverDetails()
+      }
     } catch (err) {
       console.error(err);
     }
   };
+
+  useEffect(()=>{
+    if(paymentBool == true)
+    {
+      payment()
+    }
+  },[paymentBool])
+
   const storeTripDetails = async (pickup, dropoff) => {
     try {
       setRideStatus("booked");
@@ -111,25 +150,7 @@ const Confirm = () => {
         }),
       });
       
-      console.log("Ride id = " + rideId);
-      console.log(price);
-      if (typeof price === "undefined") {
-        console.error("Setting default price value.");
-        setPrice(0.002);
-        console.log("New Price = ", price);
-      }
-      let eth_price = BigInt(price * Math.pow(10, 18)).toString(16);
-      console.log("Eth price = ", eth_price);
-      await metamask.request({
-        method: "eth_sendTransaction",
-        params: [
-          {
-            from: currentAccount,
-            to: process.env.NEXT_PUBLIC_UBER_ADDRESS,
-            value: eth_price,
-          },
-        ],
-      });
+      //console.log("Ride id = " + rideId);
     } catch (error) {
       console.error(error);
     }
@@ -184,9 +205,11 @@ const Confirm = () => {
                 </div>
                 <div className="mb-8">
                   <h4 className="text-bold">Driver name</h4>
-                  <p>Ian Mante</p>
+                  <p>{driverName}</p>
                   <h4 className="text-bold">phone number</h4>
-                  <p>9856475819</p>
+                  <p>{driverPhone}</p>
+                  <h4 className="text-bold">Car number</h4>
+                  <p>{driverCarNumber}</p>
                 </div>
                 <button
                   className="px-4 py-2 bottom-0 bg-black text-white rounded-3xl hover:bg-gray-600"
