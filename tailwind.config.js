@@ -7,6 +7,8 @@ module.exports = {
   theme: {
     fontFamily: {
       display: ["Cabin", "sans-serif"],
+      readex: ["Readex Pro", "sans-serif"],
+      bruno: ["Bruno Ace SC", "sans-serif"],
     },
     extend: {},
   },
