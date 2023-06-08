@@ -1,3 +1,4 @@
+
 import RideSelector from "./rideSelector";
 import { use, useContext, useEffect, useState } from "react";
 import { UberContext } from "../context/uberContext";
@@ -29,19 +30,25 @@ const Confirm = () => {
   const [rideId, setRideId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isClickBlocked, setIsClickBlocked] = useState(false);
+
   const [driverName, setDriverName] = useState('');
   const[driverPhone,setDriverPhone] =useState('')
   const [paymentBool,setPaymentBool] = useState(false)
   const [driverCarNumber,setDriverCarNumber] = useState()
   const [driverWalletAddress,setDriverWalletAddress] = useState('')
   const router=useRouter()
+
   const openModal = () => {
     setIsModalOpen(true);
+    // setTimeout( () => {
+    //   setRideStatus("waiting");
+    // },15000);
     setIsClickBlocked(true);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
+    setRideStatus("booked");
     setIsClickBlocked(false);
   };
 
@@ -75,6 +82,7 @@ const Confirm = () => {
         getRideStatus();
         
       }, 7000);
+
 
       return () => {
         clearInterval(interval);
@@ -136,10 +144,12 @@ const Confirm = () => {
       // myFunction();
       await fetch("/api/db/saveTrips", {
         method: "POST",
+
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+
           id: newRideId,
           pickupLocation: pickup,
           dropoffLocation: dropoff,
@@ -151,12 +161,34 @@ const Confirm = () => {
       });
       
       //console.log("Ride id = " + rideId);
+
     } catch (error) {
       console.error(error);
     }
   };
 
 
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`/api/db/checkRideStatus?id=${rideId}`);
+        const data = await response.json();
+        setRideStatus(data.data[0].status);
+        console.log(data.data[0].status);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    
+    // fetchData();
+    const intervalId = setInterval(fetchData, 10000);
+  
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [rideStatus]);
+  
 
   return (
     <div className={style.wrapper}>
@@ -172,6 +204,7 @@ const Confirm = () => {
               openModal();
               if (currentUser.length === 0) {
                 router.push("/userlogin");
+
               }
             }}
           >
@@ -189,6 +222,7 @@ const Confirm = () => {
           
         </div>
       </div>
+
       {rideStatus === 'booked' ? (
           <>
             <div className={`fixed flex bg-white flex-row items-center justify-center rounded-2xl p-5 left-1/3 top-1/3 h-1/4 w-1/3 z-50 text-black ${isModalOpen ? 'block' : 'hidden'}`}>
