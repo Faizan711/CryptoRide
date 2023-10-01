@@ -1,2 +1,2 @@
 #CryptoRide
-This is a decentralized cab-booking made for final year of college.
+This is a decentralized cab-booking made using Next.js, TailwindCSS for styling, Node.js server and Sanity DB.
